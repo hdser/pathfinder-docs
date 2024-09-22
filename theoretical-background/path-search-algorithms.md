@@ -18,6 +18,38 @@ BFS explores the graph level by level, visiting all neighbors of a node before m
       iii. Store its parent node for path reconstruction.
 3. If the queue is empty and sink not reached, return no path found.
 
+### Pseudocode
+```python
+def bfs(graph, source, sink):
+    queue = [source]
+    visited = {source: None}
+    while queue:
+        current = queue.pop(0)
+        if current == sink:
+            return reconstruct_path(visited, source, sink)
+        for neighbor in graph.get_neighbors(current):
+            if neighbor not in visited:
+                visited[neighbor] = current
+                queue.append(neighbor)
+    return None  # No path found
+
+def reconstruct_path(visited, source, sink):
+    path = []
+    current = sink
+    while current != source:
+        path.append(current)
+        current = visited[current]
+    path.append(source)
+    return path[::-1]
+```
+
+### Time Complexity
+- O(V + E), where V is the number of vertices and E is the number of edges.
+- In the worst case, when the graph is complete, this becomes O(V^2).
+
+### Space Complexity
+- O(V) for the queue and visited set.
+
 ### Advantages
 - Finds the shortest path in terms of the number of edges.
 - Guarantees optimality for unweighted graphs.
@@ -25,9 +57,6 @@ BFS explores the graph level by level, visiting all neighbors of a node before m
 
 ### Disadvantages
 - May not be the most efficient for sparse graphs or when the sink is far from the source.
-
-### Impact on Flow Algorithms
-When used in Ford-Fulkerson (known as the Edmonds-Karp algorithm), it guarantees a polynomial time complexity of O(VE^2), where V is the number of vertices and E is the number of edges.
 
 ## Depth-First Search (DFS)
 
@@ -44,6 +73,37 @@ DFS explores as far as possible along each branch before backtracking. It uses a
    b. If no unvisited neighbors, backtrack.
 3. If sink is reached, return the path; otherwise, return no path found.
 
+### Pseudocode
+```python
+def dfs(graph, source, sink, visited=None, path=None):
+    if visited is None:
+        visited = set()
+    if path is None:
+        path = []
+    
+    visited.add(source)
+    path.append(source)
+    
+    if source == sink:
+        return path
+    
+    for neighbor in graph.get_neighbors(source):
+        if neighbor not in visited:
+            result = dfs(graph, neighbor, sink, visited, path)
+            if result is not None:
+                return result
+    
+    path.pop()
+    return None  # No path found
+```
+
+### Time Complexity
+- O(V + E) in the worst case, where V is the number of vertices and E is the number of edges.
+- However, the actual running time can vary significantly depending on the graph structure and the order of neighbor exploration.
+
+### Space Complexity
+- O(V) in the worst case for the recursion stack.
+
 ### Advantages
 - Memory-efficient for very deep graphs.
 - Can be faster than BFS for finding "any" path, especially in sparse graphs.
@@ -51,9 +111,6 @@ DFS explores as far as possible along each branch before backtracking. It uses a
 ### Disadvantages
 - Does not guarantee the shortest path.
 - Can get stuck in deep branches of the graph.
-
-### Impact on Flow Algorithms
-When used in Ford-Fulkerson, it can lead to poor performance in certain graph structures, potentially resulting in a time complexity of O(E * max_flow).
 
 ## Bidirectional BFS
 
@@ -71,6 +128,60 @@ Bidirectional BFS runs two simultaneous BFS searches: one from the source and on
    c. If a node is encountered that has been visited by the other search, reconstruct and return the path.
 3. If either queue becomes empty before a meeting point is found, return no path found.
 
+### Pseudocode
+```python
+def bidirectional_bfs(graph, source, sink):
+    forward_queue = [source]
+    backward_queue = [sink]
+    forward_visited = {source: None}
+    backward_visited = {sink: None}
+    
+    while forward_queue and backward_queue:
+        # Forward search
+        current = forward_queue.pop(0)
+        for neighbor in graph.get_neighbors(current):
+            if neighbor not in forward_visited:
+                forward_visited[neighbor] = current
+                forward_queue.append(neighbor)
+                if neighbor in backward_visited:
+                    return reconstruct_bidirectional_path(forward_visited, backward_visited, source, sink, neighbor)
+        
+        # Backward search
+        current = backward_queue.pop(0)
+        for neighbor in graph.get_neighbors(current):
+            if neighbor not in backward_visited:
+                backward_visited[neighbor] = current
+                backward_queue.append(neighbor)
+                if neighbor in forward_visited:
+                    return reconstruct_bidirectional_path(forward_visited, backward_visited, source, sink, neighbor)
+    
+    return None  # No path found
+
+def reconstruct_bidirectional_path(forward_visited, backward_visited, source, sink, meeting_point):
+    path = []
+    current = meeting_point
+    while current != source:
+        path.append(current)
+        current = forward_visited[current]
+    path.append(source)
+    path = path[::-1]
+    
+    current = backward_visited[meeting_point]
+    while current != sink:
+        path.append(current)
+        current = backward_visited[current]
+    path.append(sink)
+    
+    return path
+```
+
+### Time Complexity
+- O(b^(d/2)), where b is the branching factor and d is the distance between source and sink.
+- This is significantly better than the O(b^d) complexity of standard BFS, especially for large d.
+
+### Space Complexity
+- O(b^(d/2)) for storing the visited nodes from both directions.
+
 ### Advantages
 - Can be significantly faster than standard BFS, especially when the source and sink are far apart.
 - Still guarantees the shortest path.
@@ -79,20 +190,47 @@ Bidirectional BFS runs two simultaneous BFS searches: one from the source and on
 - More complex to implement.
 - Requires keeping track of two search frontiers.
 
-### Impact on Flow Algorithms
-Can potentially speed up each augmenting path finding step in Ford-Fulkerson or Capacity Scaling, especially in large, sparse networks.
+## Impact on Flow Algorithm Performance
 
-## Comparison in the Context of Network Flow
+The choice of path search algorithm can significantly affect the performance of network flow algorithms:
 
-1. **Path Length**: BFS and Bidirectional BFS find shortest augmenting paths, which is beneficial for the Edmonds-Karp algorithm. DFS may find longer paths, potentially leading to more iterations in Ford-Fulkerson.
+1. **Ford-Fulkerson Algorithm**:
+   - With BFS (Edmonds-Karp algorithm): Guarantees O(VE^2) time complexity.
+   - With DFS: Can have poor performance, potentially O(E * max_flow) in the worst case.
+   - With Bidirectional BFS: Can improve performance, especially in large, sparse networks.
 
-2. **Performance**: 
-   - BFS performs well in dense graphs and when short augmenting paths are common.
-   - DFS can be faster in sparse graphs or when any path (not necessarily the shortest) is sufficient.
-   - Bidirectional BFS often outperforms both in large networks, especially when source and sink are far apart.
+2. **Capacity Scaling Algorithm**:
+   - The impact of path search choice is less pronounced due to the Δ-residual graph restricting the search space.
+   - BFS or Bidirectional BFS are generally preferred for their shortest path guarantee.
 
-3. **Theoretical Guarantees**: Using BFS in Ford-Fulkerson provides polynomial time complexity guarantees (Edmonds-Karp algorithm), while DFS does not.
+3. **Push-Relabel Algorithm**:
+   - Less dependent on path search, as it works with local operations.
+   - Path search is typically used in the "gap heuristic" for performance improvement.
 
-4. **Memory Usage**: DFS generally uses less memory than BFS or Bidirectional BFS, which can be important for very large graphs.
+### Empirical Observations
+
+In our implementation, we've observed the following:
+
+1. For dense networks with relatively uniform capacities, BFS tends to perform best due to its shortest path guarantee.
+
+2. For sparse networks with varying capacities, Bidirectional BFS often outperforms standard BFS, especially when the source and sink are far apart.
+
+3. DFS can sometimes find augmenting paths quickly in sparse networks but may lead to suboptimal flow distributions.
+
+4. In the context of financial networks:
+   - BFS and Bidirectional BFS tend to result in flow distributions that involve fewer intermediaries, which is often desirable.
+   - The performance gap between BFS and Bidirectional BFS increases with network size, making Bidirectional BFS particularly valuable for large-scale financial networks.
+
+## Considerations for Implementation
+
+1. **Memory Usage**: BFS and Bidirectional BFS use more memory than DFS, which can be a concern for very large graphs.
+
+2. **Path Length**: In financial networks, shorter paths (fewer intermediaries) are often preferred. BFS and Bidirectional BFS are advantageous in this regard.
+
+3. **Graph Structure**: The optimal choice may depend on the specific structure of the financial network. It's beneficial to allow runtime selection of the path search algorithm.
+
+4. **Parallelization**: Bidirectional BFS has potential for effective parallelization, which could be advantageous for large-scale computations.
 
 In our implementation, we provide options for both BFS and Bidirectional BFS, allowing for performance comparisons in different network structures and flow scenarios. The choice between these algorithms can significantly impact the overall efficiency of the network flow computation, especially in large-scale financial networks with varying connectivity patterns.
+
+By carefully selecting and optimizing the path search strategy, we can significantly enhance the performance of our network flow algorithms, leading to more efficient transaction routing in our decentralized financial system.

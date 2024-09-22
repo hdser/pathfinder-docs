@@ -25,7 +25,7 @@ This section provides a detailed comparison between the old and new implementati
 
 ### New Implementation
 - Modular design with `NetworkFlowAlgorithm` trait
-- Support for multiple algorithms (Ford-Fulkerson, Capacity Scaling)
+- Support for multiple algorithms (Ford-Fulkerson, Capacity Scaling, Push-Relabel)
 - Flexible path search strategies (BFS, Bidirectional BFS)
 
 **Improvement**: The new implementation offers greater flexibility, allowing for easy addition of new algorithms and optimization for different network types.
@@ -41,7 +41,7 @@ This section provides a detailed comparison between the old and new implementati
 - Optimized path search with scaling factor
 - Improved caching strategies in `FlowGraph`
 
-**Improvement**: The new implementation, especially with Capacity Scaling, offers better performance for networks with high-capacity edges and provides more consistent performance across different network types.
+**Improvement**: The new implementation, especially with Capacity Scaling and Push-Relabel, offers better performance for networks with high-capacity edges and provides more consistent performance across different network types.
 
 ## Additional Features
 
@@ -86,7 +86,7 @@ This section provides a detailed comparison between the old and new implementati
 
 ### New Implementation
 - Better equipped to handle large-scale networks
-- Capacity Scaling algorithm improves performance on large, high-capacity networks
+- Capacity Scaling and Push-Relabel algorithms improve performance on large, high-capacity networks
 
 **Improvement**: The new implementation offers better scalability, particularly for large and complex network structures.
 
