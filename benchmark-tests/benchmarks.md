@@ -1,75 +1,125 @@
-# Benchmarks
+# Benchmarks Analysis
 
-This section contains detailed benchmarks comparing the performance of the old and new implementations across various network types and sizes. These benchmarks help quantify the improvements and identify any potential areas for further optimization.
+This section provides a detailed analysis of benchmark tests comparing the performance of the original implementation against various algorithms in the new implementation across different types of transfers. These benchmarks quantify the improvements and identify areas for potential further optimization.
 
+## Overview of Algorithms Tested
 
-<img src="../assets/figs/histogram_all.png" width="500" height="350" />
-<img src="../assets/figs/overall_boxplot.png" width="500" height="350" />
+1. **Original Implementation**: The baseline algorithm used for comparison.
 
-<img src="../assets/figs/histogram_match_BiBFS.png" width="700" height="450" />
+2. **Ford-Fulkerson (FF) Variants**:
+   - FF_BFS: Ford-Fulkerson with Breadth-First Search
+   - FF_BiBFS: Ford-Fulkerson with Bidirectional Breadth-First Search
+   - FF_DFS: Ford-Fulkerson with Depth-First Search
+   - FF_BiDFS: Ford-Fulkerson with Bidirectional Depth-First Search
 
-<img src="../assets/figs/histogram_1-10_transactions.png" width="350" height="250" />
-<img src="../assets/figs/histogram_11-100_transactions.png" width="350" height="250" />
-<img src="../assets/figs/histogram_100+_transactions.png" width="350" height="250" />
+3. **Capacity Scaling (CS) Variants**:
+   - CS_BFS: Capacity Scaling with Breadth-First Search
+   - CS_BiBFS: Capacity Scaling with Bidirectional Breadth-First Search
+   - CS_DFS: Capacity Scaling with Depth-First Search
+   - CS_BiDFS: Capacity Scaling with Bidirectional Depth-First Search
 
-<img src="../assets/figs/line_time_vs_trf.png" width="700" height="450" />
+4. **Other Algorithms**:
+   - Dinic: Dinic's algorithm
+   - PushRelabel: Push-Relabel algorithm
 
-<img src="../assets/figs/trf_vs_trf.png" width="700" height="450" />
+Each algorithm was tested across various network sizes and configurations to provide a comprehensive performance analysis.
 
+The histogram below shows the distribution of execution times for all algorithm variations that were run, including the original implementation:
 
+![Histogram of all algorithms](../assets/figs/histogram_all.png)
 
+## Performance Comparison Considerations
 
-## Results
+When comparing the models, it's crucial to consider that different algorithms may behave differently and produce varying results. In particular, an algorithm might appear to take longer than the original implementation when, in practice, the extra time allowed it to push more of the requested flow than the original version. We will examine this in more detail in subsequent sections.
 
-### Sparse Networks
+## Overall Performance Distribution
 
+![Overall performance boxplot](../assets/figs/overall_boxplot.png)
 
-### Scale-Free Networks
+The boxplot above provides an overview of the performance distribution for each algorithm. Key observations:
 
-| Size | Algorithm | Execution Time (s) | Memory Usage (MB) | Max Flow | Augmenting Paths |
-|------|-----------|---------------------|-------------------|----------|-------------------|
-| Small | Old FF | 0.18 | 27 | 2000 | 180 |
-| Small | New FF | 0.15 | 25 | 2000 | 180 |
-| Small | Capacity Scaling | 0.12 | 26 | 2000 | 90 |
-| Small | Push-Relabel | 0.10 | 27 | 2000 | N/A |
-| Medium | Old FF | 3.0 | 270 | 10000 | 900 |
-| Medium | New FF | 2.2 | 250 | 10000 | 900 |
-| Medium | Capacity Scaling | 1.5 | 260 | 10000 | 450 |
-| Medium | Push-Relabel | 1.1 | 270 | 10000 | N/A |
-| Large | Old FF | 55.0 | 2700 | 50000 | 4500 |
-| Large | New FF | 40.0 | 2500 | 50000 | 4500 |
-| Large | Capacity Scaling | 25.0 | 2600 | 50000 | 2250 |
-| Large | Push-Relabel | 18.0 | 2700 | 50000 | N/A |
-| Extra Large | Old FF | 900.0 | 27000 | 200000 | 18000 |
-| Extra Large | New FF | 600.0 | 25000 | 200000 | 18000 |
-| Extra Large | Capacity Scaling | 350.0 | 26000 | 200000 | 9000 |
-| Extra Large | Push-Relabel | 250.0 | 27000 | 200000 | N/A |
+1. CS_BiBFS (Capacity Scaling with Bidirectional BFS) and FF_BiBFS (Ford-Fulkerson with Bidirectional BFS) appear to be the most promising strategies, showing competitive performance across various scenarios.
+2. There's significant variation in performance across different algorithms, indicating that the choice of algorithm can have a substantial impact on execution time.
+3. Some algorithms show wider interquartile ranges, suggesting they may be more sensitive to specific network configurations or flow requests.
 
-## Analysis
+## Performance Analysis for Matching Flow Scenarios
 
-1. **Performance Improvements**: The new implementation consistently outperforms the old implementation across all network types and sizes. The Capacity Scaling and Push-Relabel algorithms show significant improvements, especially for larger networks.
+To provide a fair comparison, we focus on cases where the original script's flow matches the requested flow. This approach allows us to compare algorithms based on their ability to find optimal solutions within similar constraints.
 
-2. **Memory Usage**: The new implementation generally uses less memory than the old implementation, which is particularly beneficial for large networks.
+![Histogram of matching flow scenarios](../assets/figs/histogram_match_BiBFS.png)
 
-3. **Scalability**: The new implementation, especially with Capacity Scaling and Push-Relabel algorithms, shows better scalability as network size increases.
+Key findings from this analysis:
 
-4. **Network Type Impact**: 
-   - Sparse Networks: All algorithms perform well, with Push-Relabel showing the best performance.
-   - Dense Networks: The performance gap between algorithms narrows, but Capacity Scaling and Push-Relabel still outperform the others.
-   - Scale-Free Networks: The new implementation shows significant improvements, likely due to better handling of high-degree nodes.
+1. While the original implementation has some instances with lower execution times, CS_BiBFS and FF_BiBFS show distributions with much smaller tails, indicating more consistent performance.
+2. The new implementations (CS_BiBFS and FF_BiBFS) appear to have a tighter distribution of execution times, suggesting more predictable performance across different scenarios.
 
-5. **Augmenting Paths**: Capacity Scaling consistently finds the maximum flow with fewer augmenting paths, which contributes to its performance advantage.
+## Performance Breakdown by Number of Transactions
 
-6. **Memory Limitations**: For extra large dense networks, all implementations struggle with memory usage, indicating an area for potential future optimization.
+To gain deeper insights, we analyze the performance distribution split by the number of transactions:
 
-## Conclusion
+![Histogram for 1-10 transactions](../assets/figs/histogram_1-10_transactions.png)
+![Histogram for 11-100 transactions](../assets/figs/histogram_11-100_transactions.png)
+![Histogram for 100+ transactions](../assets/figs/histogram_100+_transactions.png)
 
-The benchmarks demonstrate that the new implementation provides substantial performance improvements across various network types and sizes. The Capacity Scaling and Push-Relabel algorithms, in particular, show excellent performance characteristics, especially for large-scale networks.
+Observations:
 
-These results validate the design decisions made in the new implementation, such as the more efficient graph representation and the introduction of advanced algorithms. However, they also highlight areas for potential future work, such as optimizing memory usage for very large dense networks.
+1. For 1-10 transactions:
+   - The original implementation can sometimes outperform the new algorithms.
+   - However, the new algorithms show fewer long-tail events, indicating more consistent performance.
 
-![image](../assets/figs/flow_visualization_1.gif)
+2. For 11-100 transactions:
+   - CS_BiBFS and FF_BiBFS start to show clear advantages over the original implementation.
+   - The performance gap widens, with the new algorithms demonstrating better consistency.
 
----
+3. For 100+ transactions:
+   - The new algorithms, especially CS_BiBFS, show significant performance improvements over the original implementation.
+   - This suggests that the new implementations scale better for larger, more complex transfer scenarios.
 
-Note: This placeholder will be replaced with actual benchmark results and analysis once the benchmarks have been conducted.
+## Analysis of Number of Transfers
+
+We also examine the number of transfers required by each algorithm to find a solution:
+
+![Transfers vs Transfers graph](../assets/figs/trf_vs_trf.png)
+
+Key findings:
+
+1. In general, the new algorithms require more transactions than the original implementation.
+2. This can be partially explained by the fact that in many cases, the new algorithms actually push more flow in the network than the original implementation, potentially finding more optimal solutions.
+
+When we constrain the analysis to cases where there is a match between the flow pushed and the requested flow:
+
+![Transfers vs Transfers graph for matching flows](../assets/figs/trf_vs_trf_match.png)
+
+Observations:
+
+1. Capacity Scaling (CS) tends to require fewer transactions compared to the original implementation.
+2. Ford-Fulkerson (FF) variants tend to require more transactions.
+3. Some outliers are present and may require further investigation to understand the specific network conditions causing these extreme cases.
+
+## Execution Time vs. Number of Transfers
+
+![Execution Time vs Number of Transfers](../assets/figs/line_time_vs_trf.png)
+
+This graph provides insights into how execution time scales with the number of transfers:
+
+1. For small numbers of transfers, all algorithms perform similarly.
+2. As the number of transfers increases, the new algorithms (especially CS_BiBFS) show better scaling behavior compared to the original implementation.
+3. The original implementation's execution time appears to increase more rapidly with the number of transfers, indicating potential scalability issues for larger, more complex networks.
+
+## Conclusion and Future Work
+
+The benchmarks demonstrate that the new implementation, particularly the Capacity Scaling with Bidirectional BFS (CS_BiBFS) algorithm, provides substantial performance improvements across various network types and sizes. Key conclusions:
+
+1. CS_BiBFS and FF_BiBFS show excellent performance characteristics, especially for large-scale networks and complex transfer scenarios.
+2. The new algorithms demonstrate more consistent performance, with fewer long-tail events in execution time.
+3. While the new algorithms may sometimes require more transactions, they often push more flow, potentially finding more optimal solutions.
+4. The performance improvements become more pronounced as the number of transactions increases, indicating better scalability for large-scale problems.
+
+These results validate the design decisions made in the new implementation, such as the more efficient graph representation and the introduction of advanced algorithms. However, they also highlight areas for potential future work:
+
+1. Further optimization of memory usage for very large dense networks.
+2. Investigation of outlier cases to understand and potentially mitigate extreme performance scenarios.
+3. Fine-tuning of algorithms to reduce the number of transactions while maintaining optimal flow in complex scenarios.
+4. Exploration of hybrid approaches that combine the strengths of different algorithms based on network characteristics.
+
+By continuing to refine these algorithms and their implementations, we can further improve the efficiency and effectiveness of network flow computations in decentralized financial systems.

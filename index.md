@@ -22,10 +22,7 @@ Welcome to the documentation for our Network Flow Algorithms project. This docum
    - [Capacity Scaling Implementation](./new-implementation/capacity-scaling.md)
    - [Flow Recorder](./new-implementation/flow-recorder.md)
 
-4. [Comparison](./comparison/index.md)
-   - [Implementation Differences](./comparison/implementation-differences.md)
-   - [Benchmarks](./comparison/benchmarks.md)
+4. [Comparison](./benchmark-tests/index.md)
+   - [Benchmarks](./benchmark-tests/benchmarks.md)
 
-This documentation aims to provide a comprehensive understanding of the network flow algorithms used in our project, including both theoretical foundations and practical implementations. It covers both the old and new implementations, allowing for comparison and analysis of the different approaches.
-
-Feel free to navigate through the sections to learn more about specific aspects of the project.
+This documentation aims to provide a comprehensive understanding of the network flow algorithms used in the pathfinder2, including both theoretical foundations and practical implementations. It covers both the original and new implementations, allowing for comparison and analysis of the different approaches.
