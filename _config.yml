@@ -1,5 +1,5 @@
 # Site settings
-title: Path Finder Documentation
+title: PathFinder Documentation
 description: Documentation for network flow algorithms implementation on Circles
 baseurl: "/pathfinder-docs" 
 url: "https://hdser.github.io" 
@@ -21,7 +21,7 @@ footer_content: "Copyright &copy; 2024 hdser. Distributed by an <a href=\"https:
 
 include:
   - assets
-  
+
 # Collections for organizing content
 collections:
   theoretical_background:
@@ -41,9 +41,9 @@ just_the_docs:
   collections:
     theoretical_background:
       name: Theoretical Background
-    original_implementation:
+   # original_implementation:
       name: Original Implementation
     new_implementation:
-      name: New Implementation
+    #  name: New Implementation
     benchmark_tests:
-      name: Benchmark Tests
+    #  name: Benchmark Tests
