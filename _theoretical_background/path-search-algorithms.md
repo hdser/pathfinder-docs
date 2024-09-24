@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Network Flow Problem
+title: Path Search Algorithms
 parent: Theoretical Background
 nav_order: 4
 ---

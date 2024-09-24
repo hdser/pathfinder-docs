@@ -11,11 +11,11 @@ This section provides a detailed overview of the current implementation of our n
 
 ## Contents
 
-1. [Graph Structure]({% link _new_implementation/graph-structure.md %})
-2. [Path Search]({% link _new_implementation/path-search.md %})
-3. [Ford-Fulkerson Implementation]({% link _new_implementation/ford-fulkerson.md %})
-4. [Capacity Scaling Implementation]({% link _new_implementation/capacity-scaling.md %})
-5. [Flow Recorder]({% link _new_implementation/flow-recorder.md %})
+1. [Graph Structure]({{ site.baseurl }}{% link _new_implementation/graph-structure.md %})
+2. [Path Search]({{ site.baseurl }}{% link _new_implementation/path-search.md %})
+3. [Ford-Fulkerson Implementation]({{ site.baseurl }}{% link _new_implementation/ford-fulkerson.md %})
+4. [Capacity Scaling Implementation]({{ site.baseurl }}{% link _new_implementation/capacity-scaling.md %})
+5. [Flow Recorder]({{ site.baseurl }}{% link _new_implementation/flow-recorder.md %})
 
 ## Key Improvements
 

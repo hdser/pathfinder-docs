@@ -10,4 +10,4 @@ has_children: true
 
 ## Contents
 
-1. [Benchmarks]({% link _benchmark_tests/benchmarks.md %})
+1. [Benchmarks]({{ site.baseurl }}{% link _benchmark_tests/benchmarks.md %})

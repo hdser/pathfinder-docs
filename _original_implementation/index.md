@@ -11,9 +11,9 @@ This section provides a detailed overview of the previous implementation of our 
 
 ## Contents
 
-1. [Graph Structure]({% link _original_implementation/graph-structure.md %})
-2. [Adjacencies]({% link _original_implementation/adjacencies.md %})
-3. [Flow Computation]({% link _original_implementation/flow-computation.md %})
+1. [Graph Structure]({{ site.baseurl }}{% link _original_implementation/graph-structure.md %})
+2. [Adjacencies]({{ site.baseurl }}{% link _original_implementation/adjacencies.md %})
+3. [Flow Computation]({{ site.baseurl }}{% link _original_implementation/flow-computation.md %})
 
 ## Key Features
 

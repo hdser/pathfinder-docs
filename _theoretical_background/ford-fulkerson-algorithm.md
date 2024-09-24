@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Network Flow Problem
+title: Ford-Fulkerson Algorithm
 parent: Theoretical Background
 nav_order: 2
 ---

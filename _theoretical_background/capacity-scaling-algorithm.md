@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Network Flow Problem
+title: Capacity Scaling Algorithm
 parent: Theoretical Background
 nav_order: 3
 ---
