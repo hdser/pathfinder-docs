@@ -30,7 +30,7 @@ Each algorithm was tested across various the same transfer configurations to pro
 
 The histogram below shows the distribution of execution times for all algorithm variations that were run, including the original implementation:
 
-![Histogram of all algorithms](../assets/figs/histogram_all.png)
+![Histogram of all algorithms]({{ site.baseurl }}/assets/figs/histogram_all.png)
 
 ## Performance Comparison Considerations
 
@@ -38,7 +38,7 @@ When comparing the models, it's crucial to consider that different algorithms ma
 
 ## Overall Performance Distribution
 
-![Overall performance boxplot](../assets/figs/overall_boxplot.png)
+![Overall performance boxplot]({{ site.baseurl }}/assets/figs/overall_boxplot.png)
 
 The boxplot above provides an overview of the performance distribution for each algorithm. Key observations:
 
@@ -50,7 +50,7 @@ The boxplot above provides an overview of the performance distribution for each 
 
 To provide a fair comparison, we focus on cases where the original script's flow matches the requested flow. This approach allows us to compare algorithms based on their ability to find optimal solutions within similar constraints.
 
-![Histogram of matching flow scenarios](../assets/figs/histogram_match_BiBFS.png)
+![Histogram of matching flow scenarios]({{ site.baseurl }}/assets/figs/histogram_match_BiBFS.png)
 
 Key findings from this analysis:
 
@@ -61,9 +61,9 @@ Key findings from this analysis:
 
 To gain deeper insights, we analyze the performance distribution split by the number of transactions:
 
-![Histogram for 1-10 transactions](../assets/figs/histogram_1-10_transactions.png)
-![Histogram for 11-100 transactions](../assets/figs/histogram_11-100_transactions.png)
-![Histogram for 100+ transactions](../assets/figs/histogram_100+_transactions.png)
+![Histogram for 1-10 transactions]({{ site.baseurl }}/assets/figs/histogram_1-10_transactions.png)
+![Histogram for 11-100 transactions]({{ site.baseurl }}/assets/figs/histogram_11-100_transactions.png)
+![Histogram for 100+ transactions]({{ site.baseurl }}/assets/figs/histogram_100+_transactions.png)
 
 Observations:
 
@@ -83,7 +83,7 @@ Observations:
 
 We also examine the number of transfers required by each algorithm to find a solution:
 
-![Transfers vs Transfers graph](../assets/figs/trf_vs_trf.png)
+![Transfers vs Transfers graph]({{ site.baseurl }}/assets/figs/trf_vs_trf.png)
 
 Key findings:
 
@@ -92,7 +92,7 @@ Key findings:
 
 When we constrain the analysis to cases where there is a match between the flow pushed and the requested flow:
 
-![Transfers vs Transfers graph for matching flows](../assets/figs/trf_vs_trf_match.png)
+![Transfers vs Transfers graph for matching flows]({{ site.baseurl }}/assets/figs/trf_vs_trf_match.png)
 
 Observations:
 
@@ -102,7 +102,7 @@ Observations:
 
 ## Execution Time vs. Number of Transfers
 
-![Execution Time vs Number of Transfers](../assets/figs/line_time_vs_trf.png)
+![Execution Time vs Number of Transfers]({{ site.baseurl }}/assets/figs/line_time_vs_trf.png)
 
 This graph provides insights into how execution time scales with the number of transfers:
 
