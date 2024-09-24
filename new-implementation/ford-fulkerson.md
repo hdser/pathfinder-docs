@@ -27,11 +27,25 @@ impl NetworkFlowAlgorithm for FordFulkerson {
 }
 ```
 
-## Key Components
+## Detailed Algorithm Walkthrough
 
-### 1. Flow Computation Loop
+Let's break down the Ford-Fulkerson implementation step by step:
 
-The main loop of the Ford-Fulkerson algorithm:
+### 1. Initialization
+
+```rust
+let mut total_flow = U256::default();
+let mut sink_flow = U256::default();
+let mut flow_paths = Vec::new();
+let mut residual_graph = graph.clone();
+
+let estimated_max_flow = graph.estimate_max_flow(source, sink);
+let target_flow = std::cmp::min(requested_flow, estimated_max_flow);
+```
+
+Here, we initialize our flow variables and create a residual graph. We also estimate the maximum possible flow and set our target flow accordingly.
+
+### 2. Main Loop
 
 ```rust
 loop {
@@ -40,102 +54,129 @@ loop {
         &mut residual_graph,
         source,
         sink,
-        target_flow - flow,
+        target_flow - sink_flow,
         max_distance,
-        Some(U256::from(10000000000000000))
+        Some(U256::from(100000000000000000))
     );
     
     if path_flow == U256::default() || path.is_empty() {
+        println!("No more augmenting paths found");
         break;
     }
 
-    flow += path_flow;
-    Self::update_flow(&mut residual_graph, &path, path_flow, &mut flow_paths);
+    let reached_sink = Self::update_flow(&mut residual_graph, &path, path_flow, &mut flow_paths);
+    if reached_sink {
+        sink_flow += path_flow;
+    }
+    
+    total_flow += path_flow;
 
-    // Recording step if a recorder is provided
     if let Some(ref mut recorder) = recorder {
-        recorder.record_step(flow, path.clone(), path_flow, residual_graph.clone());
+        recorder.record_step(total_flow, path.clone(), path_flow, residual_graph.clone());
     }
 
-    if flow >= target_flow {
+    if sink_flow >= target_flow {
+        println!("Reached or exceeded requested flow to sink");
         break;
     }
 }
 ```
 
-### 2. Flow Update
+This is the core of the Ford-Fulkerson algorithm. We repeatedly find augmenting paths and update the flow until no more paths are found or we reach the target flow.
 
-The `update_flow` method updates the residual graph and records the flow paths:
+### 3. Flow Update
 
 ```rust
-fn update_flow(graph: &mut FlowGraph, path: &[Address], path_flow: U256, flow_paths: &mut Vec<Edge>) {
-    let mut actual_flow = path_flow;
+fn update_flow(graph: &mut FlowGraph, path: &[Address], path_flow: U256, flow_paths: &mut Vec<Edge>) -> bool {
+    let mut reached_sink = false;
     
-    // Determine the actual flow possible
-    for window in path.windows(2) {
-        let from = window[0];
-        let to = window[1];
-        let token = graph.get_edge_token(&from, &to).expect("Edge not found");
-        let available_capacity = graph.get_edge_capacity(&from, &to, &token);
-        actual_flow = min(actual_flow, available_capacity);
-    }
-    
-    // Update the graph with the actual flow
     for window in path.windows(2) {
         let from = window[0];
         let to = window[1];
         let token = graph.get_edge_token(&from, &to).expect("Edge not found");
         
-        graph.update_edge_capacity(&from, &to, &token, actual_flow);
+        // Decrease capacity in the forward direction
+        graph.decrease_edge_capacity(&from, &to, &token, path_flow);
         
+        // Increase capacity in the reverse direction
+        graph.increase_edge_capacity(&to, &from, &token, path_flow);
+
         flow_paths.push(Edge {
             from,
             to,
             token,
-            capacity: actual_flow,
+            capacity: path_flow,
         });
 
-        // Mark both nodes as dirty
-        graph.invalidate_cache(&from);
-        graph.invalidate_cache(&to);
+        if to == *path.last().unwrap() {
+            reached_sink = true;
+        }
     }
+
+    reached_sink
 }
 ```
 
-## Key Features
+This method updates the residual graph and records the flow paths.
 
-1. **Flexible Path Search**: The algorithm can use different path search strategies (BFS, Bidirectional BFS) based on the `path_search_algorithm` parameter.
+### 4. Post-processing
 
-2. **Flow Recording**: Optional integration with a `FlowRecorder` for visualizing and analyzing the flow computation process.
+```rust
+let actual_sink_flow = flow_paths.iter()
+    .filter(|e| e.to == *sink)
+    .fold(U256::from(0), |acc, e| acc + e.capacity);
 
-3. **Efficient Graph Updates**: Utilizes the `FlowGraph` structure's methods for efficient updates of edge capacities and node caches.
+let (final_flow, final_transfers) = NetworkFlow::post_process(actual_sink_flow, flow_paths, requested_flow, source, sink);
+```
 
-4. **Termination Conditions**: Implements multiple termination conditions (no more augmenting paths, reached requested flow, etc.) for efficiency.
+After the main algorithm completes, we calculate the actual flow to the sink and perform post-processing to ensure we meet the requested flow and optimize the transfer paths.
 
-5. **Maximum Flow Estimation**: Uses the graph's `estimate_max_flow` method to set a realistic target flow.
+## Integration with FlowGraph
 
-## Improvements Over the Old Implementation
+The new implementation makes extensive use of the `FlowGraph` structure:
 
-1. **Modularity**: Clear separation between the flow algorithm, graph structure, and path search strategy.
+1. **Edge Capacity Updates**: We use `decrease_edge_capacity` and `increase_edge_capacity` methods to update the residual graph.
 
-2. **Flexibility**: Easy to switch between different path search algorithms without changing the core Ford-Fulkerson implementation.
+2. **Path Finding**: The `PathSearch::find_path` method takes a `FlowGraph` as an argument, allowing it to efficiently query the graph structure.
 
-3. **Efficiency**: Utilizes the improved caching and update mechanisms of the new `FlowGraph` structure.
+3. **Flow Estimation**: We use the `estimate_max_flow` method of `FlowGraph` to get an initial estimate of the maximum possible flow.
 
-4. **Visualization**: Integration with `FlowRecorder` allows for better debugging and analysis of the flow computation process.
+## Performance Optimizations
 
-5. **Scalability**: Better handling of large graphs through more efficient data structures and algorithms.
+1. **Efficient Path Finding**: By using the `PathSearchAlgorithm` enum, we can choose the most efficient path-finding algorithm for our specific network structure.
 
-## Considerations
+2. **Minimum Flow Threshold**: We use a minimum flow threshold (100000000000000000 wei, or 0.1 tokens) to avoid spending time on insignificant flow improvements.
 
-1. **Performance Tuning**: The choice of path search algorithm and parameters like `max_distance` can significantly impact performance and should be tuned based on the network characteristics.
+```rust
+Some(U256::from(100000000000000000))
+```
 
-2. **Memory Usage**: While more efficient than the old implementation, processing very large graphs may still require significant memory.
+3. **Early Termination**: We break the main loop as soon as we reach or exceed the requested flow to the sink.
 
-3. **Flow Recording Overhead**: When using a `FlowRecorder`, there may be additional computational and memory overhead, especially for large graphs or high iteration counts.
+4. **Residual Graph**: Instead of modifying the original graph, we work with a residual graph, allowing for efficient backtracking of flow.
+
+5. **Flow Recording**: The optional `FlowRecorder` allows for detailed analysis and visualization of the flow computation process without affecting the core algorithm.
+
+## Comparison with Old Implementation
+
+1. **Flexibility**: The new implementation can easily switch between different path search algorithms, allowing for better performance across different network types.
+
+2. **Scalability**: By leveraging the efficient `FlowGraph` structure, the new implementation can handle larger networks more effectively.
+
+3. **Modularity**: The clear separation between the flow algorithm, graph structure, and path search strategy makes the code more maintainable and extensible.
+
+4. **Performance**: The ability to choose optimal path search strategies and the use of efficient data structures in `FlowGraph` lead to better overall performance.
+
+## Limitations and Future Improvements
+
+1. **Memory Usage**: For very large graphs, memory usage can still be a concern, especially when storing the entire residual graph.
+
+2. **Parallelization**: The current implementation is single-threaded. Future versions could explore parallelizing certain aspects of the algorithm, such as path finding.
+
+3. **Dynamic Flow Updates**: The algorithm currently recomputes the entire flow when changes occur. Future improvements could focus on incrementally updating flows in response to small changes in the network.
 
 ## Conclusion
 
 The new Ford-Fulkerson implementation provides a more flexible, efficient, and scalable solution for computing maximum flow in complex networks. By leveraging the improved `FlowGraph` structure and modular path search strategies, it addresses many of the limitations of the old implementation while introducing new capabilities for handling large-scale networks and providing insights into the flow computation process.
 
-This implementation sets a solid foundation for further enhancements and optimizations, such as the Capacity Scaling algorithm, which we'll explore in the next section.
+This implementation sets a solid foundation for further enhancements and optimizations. Its modular design allows for easy integration of new path search algorithms or flow computation strategies, making it well-suited for adapting to the evolving needs of decentralized financial networks.

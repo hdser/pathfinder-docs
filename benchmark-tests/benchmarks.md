@@ -2,81 +2,27 @@
 
 This section contains detailed benchmarks comparing the performance of the old and new implementations across various network types and sizes. These benchmarks help quantify the improvements and identify any potential areas for further optimization.
 
-## Test Environment
 
-- Hardware: Intel Core i9-11900K, 64GB RAM
-- Operating System: Ubuntu 20.04 LTS
-- Rust Version: 1.57.0
-- Compilation: Release mode with optimizations
+<img src="../assets/figs/histogram_all.png" width="500" height="350" />
+<img src="../assets/figs/overall_boxplot.png" width="500" height="350" />
 
-## Network Types
+<img src="../assets/figs/histogram_match_BiBFS.png" width="700" height="450" />
 
-1. **Sparse Networks**: Average degree < 5
-2. **Dense Networks**: Average degree > 20
-3. **Scale-Free Networks**: Degree distribution follows a power law
-4. **Random Networks**: Erdős–Rényi model
+<img src="../assets/figs/histogram_1-10_transactions.png" width="350" height="250" />
+<img src="../assets/figs/histogram_11-100_transactions.png" width="350" height="250" />
+<img src="../assets/figs/histogram_100+_transactions.png" width="350" height="250" />
 
-## Network Sizes
+<img src="../assets/figs/line_time_vs_trf.png" width="700" height="450" />
 
-1. Small: 1,000 nodes
-2. Medium: 10,000 nodes
-3. Large: 100,000 nodes
-4. Extra Large: 1,000,000 nodes
+<img src="../assets/figs/trf_vs_trf.png" width="700" height="450" />
 
-## Algorithms Tested
 
-1. Old Implementation: Ford-Fulkerson
-2. New Implementation: Ford-Fulkerson
-3. New Implementation: Capacity Scaling
-4. New Implementation: Push-Relabel
 
-## Metrics Measured
-
-1. Execution Time (seconds)
-2. Memory Usage (MB)
-3. Maximum Flow Achieved
-4. Number of Augmenting Paths (for Ford-Fulkerson and Capacity Scaling)
 
 ## Results
 
 ### Sparse Networks
 
-| Size | Algorithm | Execution Time (s) | Memory Usage (MB) | Max Flow | Augmenting Paths |
-|------|-----------|---------------------|-------------------|----------|-------------------|
-| Small | Old FF | 0.15 | 25 | 1000 | 150 |
-| Small | New FF | 0.12 | 22 | 1000 | 150 |
-| Small | Capacity Scaling | 0.10 | 23 | 1000 | 80 |
-| Small | Push-Relabel | 0.08 | 24 | 1000 | N/A |
-| Medium | Old FF | 2.5 | 250 | 5000 | 750 |
-| Medium | New FF | 1.8 | 220 | 5000 | 750 |
-| Medium | Capacity Scaling | 1.2 | 230 | 5000 | 400 |
-| Medium | Push-Relabel | 0.9 | 240 | 5000 | N/A |
-| Large | Old FF | 45.0 | 2500 | 25000 | 3500 |
-| Large | New FF | 30.0 | 2200 | 25000 | 3500 |
-| Large | Capacity Scaling | 18.0 | 2300 | 25000 | 1800 |
-| Large | Push-Relabel | 12.0 | 2400 | 25000 | N/A |
-| Extra Large | Old FF | 750.0 | 25000 | 100000 | 15000 |
-| Extra Large | New FF | 450.0 | 22000 | 100000 | 15000 |
-| Extra Large | Capacity Scaling | 250.0 | 23000 | 100000 | 7500 |
-| Extra Large | Push-Relabel | 180.0 | 24000 | 100000 | N/A |
-
-### Dense Networks
-
-| Size | Algorithm | Execution Time (s) | Memory Usage (MB) | Max Flow | Augmenting Paths |
-|------|-----------|---------------------|-------------------|----------|-------------------|
-| Small | Old FF | 0.25 | 30 | 5000 | 200 |
-| Small | New FF | 0.20 | 28 | 5000 | 200 |
-| Small | Capacity Scaling | 0.15 | 29 | 5000 | 100 |
-| Small | Push-Relabel | 0.12 | 30 | 5000 | N/A |
-| Medium | Old FF | 4.0 | 300 | 25000 | 1000 |
-| Medium | New FF | 3.0 | 280 | 25000 | 1000 |
-| Medium | Capacity Scaling | 2.0 | 290 | 25000 | 500 |
-| Medium | Push-Relabel | 1.5 | 300 | 25000 | N/A |
-| Large | Old FF | 75.0 | 3000 | 125000 | 5000 |
-| Large | New FF | 55.0 | 2800 | 125000 | 5000 |
-| Large | Capacity Scaling | 35.0 | 2900 | 125000 | 2500 |
-| Large | Push-Relabel | 25.0 | 3000 | 125000 | N/A |
-| Extra Large | Out of memory | N/A | N/A | N/A | N/A |
 
 ### Scale-Free Networks
 
