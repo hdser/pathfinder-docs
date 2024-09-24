@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Benchmarks Analysis
+title: Benchmark Analysis
 parent: Benchmark Tests
 nav_order: 1
 ---
 
-# Benchmarks Analysis
+# Benchmark Analysis
 
 This section provides a detailed analysis of benchmark tests comparing the performance of the original implementation against various algorithms in the new implementation across different types of transfers. These benchmarks quantify the improvements and identify areas for potential further optimization.
 
