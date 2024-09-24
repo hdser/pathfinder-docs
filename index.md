@@ -29,6 +29,6 @@ Welcome to the documentation for our Network Flow Algorithms project. This docum
    - [Flow Recorder]({{ site.baseurl }}{% link _new_implementation/flow-recorder.md %})
 
 4. [Comparison]({{ site.baseurl }}{% link _benchmark_tests/index.md %})
-   - [Benchmarks]{{ site.baseurl }}({% link _benchmark_tests/benchmarks.md %})
+   - [Benchmarks]({{ site.baseurl }}{% link _benchmark_tests/benchmarks.md %})
 
 This documentation aims to provide a comprehensive understanding of the network flow algorithms used in the pathfinder2, including both theoretical foundations and practical implementations. It covers both the original and new implementations, allowing for comparison and analysis of the different approaches.
