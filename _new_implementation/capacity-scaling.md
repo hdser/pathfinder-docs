@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Capacity Scaling Algorithm
-parent: Original Implementation
+parent: New Implementation
 nav_order: 4
 ---
 

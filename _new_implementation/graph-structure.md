@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Graph Structure
-parent: Original Implementation
+parent: New Implementation
 nav_order: 1
 ---
 

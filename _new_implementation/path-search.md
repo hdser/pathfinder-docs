@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Path Search
-parent: Original Implementation
+parent: New Implementation
 nav_order: 2
 ---
 

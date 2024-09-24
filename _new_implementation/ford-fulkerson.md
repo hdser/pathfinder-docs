@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Ford-Fulkerson Algorithm
-parent: Original Implementation
+parent: New Implementation
 nav_order: 3
 ---
 
