@@ -7,7 +7,3 @@ has_children: true
 
 # Benchmark Tests
 
-
-## Contents
-
-1. [Benchmarks Analysis]({{ site.baseurl }}{% link _benchmark_tests/benchmarks.md %})

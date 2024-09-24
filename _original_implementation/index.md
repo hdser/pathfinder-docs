@@ -9,12 +9,6 @@ has_children: true
 
 This section provides a detailed overview of the previous implementation of our network flow algorithms. This implementation, while functional, had certain limitations that led to the development of the new implementation.
 
-## Contents
-
-1. [Graph Structure]({{ site.baseurl }}{% link _original_implementation/graph-structure.md %})
-2. [Adjacencies]({{ site.baseurl }}{% link _original_implementation/adjacencies.md %})
-3. [Flow Computation]({{ site.baseurl }}{% link _original_implementation/flow-computation.md %})
-
 ## Key Features
 
 - Custom graph representation tailored for the specific needs of our financial network
