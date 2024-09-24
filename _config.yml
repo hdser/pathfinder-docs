@@ -17,7 +17,7 @@ aux_links:
     - "https://github.com/hdser/pathfinder-docs"
 
 # Footer content
-footer_content: "Copyright &copy; 2023 Your Name. Distributed by an <a href=\"https://github.com/hdser/pathfinder-docs/tree/main/LICENSE.txt\">MIT license.</a>"
+footer_content: "Copyright &copy; 2024 hdser. Distributed by an <a href=\"https://github.com/hdser/pathfinder-docs/tree/main/LICENSE.txt\">MIT license.</a>"
 
 # Collections for organizing content
 collections:
@@ -30,6 +30,9 @@ collections:
   new_implementation:
     permalink: "/:collection/:path/"
     output: true
+  benchmark_tests:
+    permalink: "/:collection/:path/"
+    output: true
 
 just_the_docs:
   collections:
@@ -39,3 +42,5 @@ just_the_docs:
       name: Original Implementation
     new_implementation:
       name: New Implementation
+    benchmark_tests:
+      name: Benchmark Tests
