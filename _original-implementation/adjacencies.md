@@ -1,3 +1,10 @@
+---
+layout: default
+title: Adjacencies
+parent: Original Implementation
+nav_order: 2
+---
+
 # Original Implementation: Adjacencies
 
 The `Adjacencies` structure in the original implementation was designed to efficiently manage and query the connectivity of the graph. It employed a lazy evaluation strategy to potentially improve performance, especially for large, sparse graphs.

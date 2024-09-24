@@ -1,3 +1,10 @@
+---
+layout: default
+title: Network Flow Problem
+parent: Theoretical Background
+nav_order: 4
+---
+
 # Path Search Algorithms
 
 Path search algorithms play a crucial role in network flow computations, particularly in finding augmenting paths for algorithms like Ford-Fulkerson and Capacity Scaling. The choice of path search algorithm can significantly impact the performance and behavior of the overall flow algorithm. In our project, we implement and compare several path search strategies.

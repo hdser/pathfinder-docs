@@ -1,3 +1,10 @@
+---
+layout: default
+title: Flow Recorder
+parent: Original Implementation
+nav_order: 5
+---
+
 # New Implementation: Flow Recorder
 
 The Flow Recorder is a new component introduced in the latest implementation to enhance the analysis, debugging, and visualization capabilities of the flow algorithms. It provides a way to capture the step-by-step progress of flow computations and generate visual representations of the process.

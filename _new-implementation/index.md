@@ -1,33 +1,21 @@
+---
+layout: default
+title: New Implementation
+nav_order: 4
+has_children: true
+---
+
 # New Implementation
 
 This section provides a detailed overview of the current implementation of our network flow algorithms. This new implementation addresses many of the limitations of the previous version and introduces new features for improved flexibility, performance, and scalability.
 
 ## Contents
 
-1. [Graph Structure](./graph-structure.md)
-   - FlowGraph representation
-   - Edge and node management
-   - Caching strategies
-
-2. [Path Search](./path-search.md)
-   - BFS, DFS, and Bidirectional BFS implementations
-   - PathSearchStrategy trait
-   - Comparison of search strategies
-
-3. [Ford-Fulkerson Implementation](./ford-fulkerson.md)
-   - Basic Ford-Fulkerson algorithm
-   - Integration with different path search strategies
-   - Flow computation and augmentation
-
-4. [Capacity Scaling Implementation](./capacity-scaling.md)
-   - Capacity Scaling algorithm
-   - Integration with Ford-Fulkerson
-   - Performance improvements for large networks
-
-5. [Flow Recorder](./flow-recorder.md)
-   - Recording flow computation steps
-   - Visualization of flow progress
-   - Debugging and analysis tools
+1. [Graph Structure]({% link _new_implementation/graph-structure.md %})
+2. [Path Search]({% link _new_implementation/path-search.md %})
+3. [Ford-Fulkerson Implementation]({% link _new_implementation/ford-fulkerson.md %})
+4. [Capacity Scaling Implementation]({% link _new_implementation/capacity-scaling.md %})
+5. [Flow Recorder]({% link _new_implementation/flow-recorder.md %})
 
 ## Key Improvements
 

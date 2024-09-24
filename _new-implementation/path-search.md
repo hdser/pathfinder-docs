@@ -1,3 +1,10 @@
+---
+layout: default
+title: Path Search
+parent: Original Implementation
+nav_order: 2
+---
+
 # New Implementation: Path Search
 
 The new implementation introduces a flexible and modular approach to path searching, which is crucial for the performance of network flow algorithms. This design allows for easy integration of different search strategies and comparison of their performance in various network scenarios.

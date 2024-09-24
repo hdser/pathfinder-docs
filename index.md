@@ -1,3 +1,10 @@
+---
+layout: home
+title: Home
+nav_order: 1
+---
+
+
 # Network Flow Algorithms Documentation
 
 Welcome to the documentation for our Network Flow Algorithms project. This documentation covers both the theoretical background and practical implementations of various network flow algorithms used in our system.

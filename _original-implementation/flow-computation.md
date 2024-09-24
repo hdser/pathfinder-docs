@@ -1,3 +1,10 @@
+---
+layout: default
+title: Flow Computation
+parent: Original Implementation
+nav_order: 3
+---
+
 # Original Implementation: Flow Computation
 
 The flow computation in the original implementation was based on the Ford-Fulkerson algorithm, with additional features for flow pruning and transfer simplification. This implementation was tailored to the specific needs of the financial network but had limitations in terms of flexibility and performance for large-scale networks.

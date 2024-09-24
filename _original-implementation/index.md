@@ -1,21 +1,19 @@
+---
+layout: default
+title: Original Implementation
+nav_order: 3
+has_children: true
+---
+
 # Original Implementation
 
 This section provides a detailed overview of the previous implementation of our network flow algorithms. This implementation, while functional, had certain limitations that led to the development of the new implementation.
 
 ## Contents
 
-1. [Graph Structure](./graph-structure.md)
-   - Node and Edge representation
-   - EdgeDB and its functionalities
-
-2. [Adjacencies](./adjacencies.md)
-   - Adjacencies structure and its role
-   - Lazy evaluation and caching strategies
-
-3. [Flow Computation](./flow-computation.md)
-   - Implementation of the Ford-Fulkerson algorithm
-   - Augmenting path finding
-   - Flow pruning and simplification
+1. [Graph Structure]({% link _original_implementation/graph-structure.md %})
+2. [Adjacencies]({% link _original_implementation/adjacencies.md %})
+3. [Flow Computation]({% link _original_implementation/flow-computation.md %})
 
 ## Key Features
 

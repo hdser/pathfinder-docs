@@ -1,3 +1,10 @@
+---
+layout: default
+title: Network Flow Problem
+parent: Theoretical Background
+nav_order: 1
+---
+
 # Network Flow Problem
 
 The network flow problem is a fundamental concept in graph theory and optimization with numerous real-world applications. It involves finding the maximum flow that can be routed through a network while respecting capacity constraints on the edges.

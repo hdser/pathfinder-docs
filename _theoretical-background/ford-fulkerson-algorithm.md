@@ -1,3 +1,10 @@
+---
+layout: default
+title: Network Flow Problem
+parent: Theoretical Background
+nav_order: 2
+---
+
 # Ford-Fulkerson Algorithm
 
 The Ford-Fulkerson algorithm, developed by L. R. Ford Jr. and D. R. Fulkerson in 1956, is a fundamental method for solving the maximum flow problem in a flow network. This algorithm forms the basis for many network flow algorithms and provides important insights into the nature of network flows.

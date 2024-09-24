@@ -1,3 +1,10 @@
+---
+layout: default
+title: Network Flow Problem
+parent: Theoretical Background
+nav_order: 3
+---
+
 # Capacity Scaling Algorithm
 
 The Capacity Scaling algorithm is an enhanced version of the Ford-Fulkerson method for solving the maximum flow problem. It addresses some of the inefficiencies of the basic Ford-Fulkerson algorithm by focusing on pushing flow along edges with large residual capacities first.

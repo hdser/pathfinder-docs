@@ -1,3 +1,10 @@
+---
+layout: default
+title: Capacity Scaling Algorithm
+parent: Original Implementation
+nav_order: 4
+---
+
 # New Implementation: Capacity Scaling Algorithm
 
 The Capacity Scaling algorithm is an enhanced version of the Ford-Fulkerson method that aims to improve performance, especially for networks with high-capacity edges. This implementation builds upon the flexible structure established for the Ford-Fulkerson algorithm, integrating seamlessly with the `FlowGraph` and path search strategies

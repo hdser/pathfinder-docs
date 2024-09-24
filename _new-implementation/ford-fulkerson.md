@@ -1,3 +1,10 @@
+---
+layout: default
+title: Ford-Fulkerson Algorithm
+parent: Original Implementation
+nav_order: 3
+---
+
 # New Implementation: Ford-Fulkerson Algorithm
 
 The new implementation of the Ford-Fulkerson algorithm leverages the improved `FlowGraph` structure and the flexible path search strategies to provide a more efficient and adaptable solution for computing maximum flow in a network.

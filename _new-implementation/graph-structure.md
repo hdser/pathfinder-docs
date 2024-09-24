@@ -1,3 +1,10 @@
+---
+layout: default
+title: Graph Structure
+parent: Original Implementation
+nav_order: 1
+---
+
 # New Implementation: Graph Structure
 
 The new implementation introduces a more flexible and efficient graph structure called `FlowGraph`. This structure is designed to handle large-scale networks more effectively and provides a cleaner interface for flow algorithms.
