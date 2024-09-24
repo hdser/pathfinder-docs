@@ -40,9 +40,9 @@ collections:
 just_the_docs:
   collections:
     theoretical_background:
-      name: Theoretical Background
-   # original_implementation:
-      name: Original Implementation
+    #  name: Theoretical Background
+    original_implementation:
+    #  name: Original Implementation
     new_implementation:
     #  name: New Implementation
     benchmark_tests:
