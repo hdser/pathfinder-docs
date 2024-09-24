@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Benchmarks Analysis
-parent: Benchmarks Tests
+parent: Benchmark Tests
 nav_order: 1
 ---
 
