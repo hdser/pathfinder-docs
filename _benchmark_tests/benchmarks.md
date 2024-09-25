@@ -26,7 +26,7 @@ This section provides a detailed analysis of benchmark tests comparing the perfo
    - CS_BiDFS: Capacity Scaling with Bidirectional Depth-First Search
 
 
-Each algorithm was tested across various the same transfer configurations to provide a comprehensive performance analysis.
+Each algorithm was tested across the same transfer configurations to provide a comprehensive performance analysis.
 
 The histogram below shows the distribution of execution times for all algorithm variations that were run, including the original implementation:
 
